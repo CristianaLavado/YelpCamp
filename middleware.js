@@ -8,9 +8,9 @@ module.exports.isLoggedIn = (req, res, next) => {
         req.session.returnTo = req.originalUrl;
         req.flash("error", "You must be signed in")
         return res.redirect("/login");
-    }
+    };
     next()
-}
+};
 
 module.exports.validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
@@ -19,8 +19,8 @@ module.exports.validateCampground = (req, res, next) => {
         throw new ExpressError(msg, 400)
     } else {
         next()
-    }
-}
+    };
+};
 
 module.exports.isAuthor = async (req, res, next) => {
     const { id } = req.params;
@@ -28,9 +28,9 @@ module.exports.isAuthor = async (req, res, next) => {
     if (!campground.author.equals(req.user._id)) {
         req.flash("error", "You do not have permission to edit this campground.");
         return res.redirect(`/campgrounds/${campground._id}`)
-    }
+    };
     next()
-}
+};
 
 module.exports.validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
@@ -39,8 +39,8 @@ module.exports.validateReview = (req, res, next) => {
         throw new ExpressError(msg, 400)
     } else {
         next()
-    }
-}
+    };
+};
 
 module.exports.isReviewAuthor = async(req,res,next) => {
     const {id, reviewId} = req.params;
@@ -48,6 +48,13 @@ module.exports.isReviewAuthor = async(req,res,next) => {
     if (!review.author.equals(req.user._id)) {
         req.flash("error", "You do not have permission to delete this review.");
         return res.redirect(`/campgrounds/${id}`)
-    }
+    };
     next()
-}
+};
+
+module.exports.checkReturnTo = (req, res, next) =>{
+    if(req.session.returnTo){
+        res.locals.returnTo = req.session.returnTo;
+    };
+    next()
+};

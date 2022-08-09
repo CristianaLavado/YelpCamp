@@ -23,12 +23,16 @@ module.exports.register = catchAsync(async (req, res, next) => {
 })
 
 module.exports.loginForm = (req, res) => {
+    if(req.query.returnTo){
+        req.session.returnTo = req.query.returnTo;
+    }
     res.render("users/login")
 }
 
 module.exports.login = catchAsync(async (req, res) => {
     req.flash("success", "Welcome back to YelpCamp!");
-    res.redirect("/campgrounds")
+    const redirectUrl= res.locals.returnTo || "/campgrounds";
+    res.redirect(redirectUrl);
 })
 
 module.exports.logout= (req, res, next) => {
