@@ -35,8 +35,24 @@ body {
     border-bottom-color: white;
 }
 
-.btn-secondary, .btn-secondary:hover{
+.btn-secondary{
+        background: white;
+        color:#333;
+        text-shadow: none;
+        border: 2px solid;
+        padding:0.7em 1.5em;
+        font-size:1em;
+        transition:all 0.25s;
+        border-radius: 360px;
+    }
+
+
+.btn-secondary:hover{
     color:#333;
     text-shadow: none;
+    border-color:rgba(19, 37, 37, 0.752);
+    box-shadow:0 0.5em 0.5em -0.4em rgba(245, 245, 245, 0.807);
+    transform:translateY(-0.2em);
+    cursor:pointer;
 }
 
